@@ -1,0 +1,39 @@
+.add-icon {
+  position: relative;
+  background-color: white;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  left: 70%;
+  bottom: 25%;
+}
+
+.add-avatar {
+  width: 100%;
+  height: 100%;
+  display: grid;
+  place-items: center;
+}
+
+.img-icon {
+  width: 50px;
+  height: 50px;
+}
+
+.avatar {
+  height: 74px;
+  width: 74px;
+  border: 2px solid black;
+  border-radius: 50%;
+  img {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+  }
+}
+
+.big-avatar {
+  height: 128px;
+  width: 128px;
+  cursor: pointer;
+}
