@@ -1,12 +1,15 @@
 <script>
-import singUp from '~/components/action/singUp.vue';
+import singUp from '~/components/action/signUp';
 import backgroundImage from '../assets/imgs/login-background.png';
 import LoginService from '~/assets/http/login.service';
 import useUser from '../stores/useUser';
 import useToken from '../stores/useToken';
+import Swal from 'sweetalert2'
+
 
 export default {
-  components: { 
+  components: {
+    Swal,
     singUp 
   },
   head: {
@@ -36,13 +39,21 @@ export default {
   },
   methods: {
     async login() {
-      const {data: {user, token}} = await this.service.login(this.params);
-
-      useUser().setUser(user);
-      useToken().setToken(token);
-
-      
-      this.$router.push('/Chat');
+      this.service.login(this.params)
+        .then(({ data: { user, token } }) => {
+          useUser().setUser(user);
+          useToken().setToken(token);
+          
+          localStorage.setItem("Token", token);
+          this.$router.push('/chat');
+        })
+        .catch(({ response: { data: { message } }}) => {
+          Swal.fire({
+            title: 'Error!',
+            text: message,
+            icon: 'error',
+          })
+        })
     },
   }
 }

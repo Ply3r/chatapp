@@ -1,6 +1,6 @@
 <script>
   import ImageUploader from 'vue-image-upload-resize'
-  import UserService from '../../assets/http/user.service';
+  import UserService from '../../../assets/http/user.service';
   import Swal from 'sweetalert2'
 
   export default {
@@ -16,7 +16,7 @@
           username: '',
           password: '',
           confirm_password: '',
-          profile_image: null,
+          profile_image_url: null,
         },
         img: null,
         service: new UserService(),
@@ -70,7 +70,7 @@
       },
       setImage(value) {
         this.hasImage = true;
-        this.params.profile_image = value;
+        this.params.profile_image_url = value;
         this.img = value;
       },
       formatText(str) {

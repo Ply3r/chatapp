@@ -1,8 +1,8 @@
 <script>
-  import SideMenu from '../components/records/SideMenu';
+  import SideMenu from '../components/records/sideMenu';
 
   export default {
-    name: 'Chat',
+    name: 'chat',
     components: { SideMenu },
   }
 </script>
@@ -20,5 +20,6 @@
   height: 100vh;
   display: flex;
   overflow: hidden;
+  background-color: #131c21;
 }
 </style>

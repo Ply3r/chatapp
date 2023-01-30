@@ -23,7 +23,7 @@
 .avatar {
   height: 74px;
   width: 74px;
-  border: 2px solid black;
+  border: 4px solid rgb(255, 255, 255);
   border-radius: 50%;
   img {
     width: 100%;
@@ -33,7 +33,7 @@
 }
 
 .big-avatar {
-  height: 128px;
-  width: 128px;
+  height: 100px;
+  width: 100px;
   cursor: pointer;
 }
