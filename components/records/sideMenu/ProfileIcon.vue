@@ -1,9 +1,10 @@
 <script>
   import useUser from '../../../stores/useUser';
   import AddFriend from '../../action/sideMenu/AddFriend.vue';
+  import ListFriend from '../../action/sideMenu/ListFriend.vue';
 
   export default {
-  components: { AddFriend },
+  components: { AddFriend, ListFriend },
     name: 'ProfileIcon',
     data() {
       return {
@@ -75,7 +76,7 @@
       hide-footer
       id="friend_modal" 
     >
-      <add-friend />
+      <list-friend />
     </b-modal>
     <b-modal 
       title="Add Friend"

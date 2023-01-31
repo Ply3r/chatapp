@@ -2,6 +2,7 @@
   import FriendService from '../../../assets/http/friends.service';
 
   export default {
+    name: 'ListFriend',
     data() {
       return {
         search: "",
