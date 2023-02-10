@@ -1,16 +1,17 @@
 <script>
   import SideMenu from '../components/records/sideMenu';
+  import MessageScreen from '../components/records/messageScreen';
 
   export default {
     name: 'chat',
-    components: { SideMenu },
+    components: { SideMenu, MessageScreen },
   }
 </script>
 
 <template>
   <div class="page-container">
     <SideMenu />
-    <MessageScream />
+    <MessageScreen />
   </div>
 </template>
 

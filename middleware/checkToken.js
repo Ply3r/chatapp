@@ -1,9 +1,8 @@
   import useToken from '../stores/useToken';
   import useUser from '../stores/useUser';
-  import LoginService from '../assets/http/login.service';
+  import UserService from '../assets/http/user.service';
 
   const checkToken = async () => {
-    console.log('AQUIII', localStorage.getItem("Token"))
     if (window.location.href === 'http://localhost:3000/') return;
 
     const token = useToken().getToken;
@@ -15,12 +14,12 @@
 
     useToken().setToken(localStorageToken);
     if (!useUser().getUser || !useUser().getUser.user) {
-      await new LoginService().loginWithToken(useToken().getToken)
-        .then(({data: {user}}) => {
-          useUser().setUser(user);          
+      await new UserService().getUser(useToken().getToken)
+        .then(({data}) => {
+          useUser().setUser(data.user);          
         })
         .catch(() => {
-          // window.location.replace("http://localhost:3000")
+          window.location.replace("http://localhost:3000")
         });
     }
   }

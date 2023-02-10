@@ -7,13 +7,7 @@ class LoginService extends HttpService {
   }
 
   async login(params) {
-    const response = await axios.post('http://localhost:3001'+ '/login', params);
-
-    return response;
-  }
-
-  async loginWithToken(token) {
-    const response = await axios.post('http://localhost:3001'+ '/login_token', {token});
+    const response = await axios.post(this.ApiBaseUrl + '/login', params);
 
     return response;
   }

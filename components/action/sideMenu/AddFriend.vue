@@ -1,8 +1,12 @@
 <script>
   import UserService from '../../../assets/http/user.service';
   import FriendService from '../../../assets/http/friends.service';
+  import Swal from 'sweetalert2';
 
   export default {
+    components: {
+      Swal,
+    },
     data() {
       return {
         search: "",
@@ -23,23 +27,34 @@
         }
         
         this.searched = true;
-        this.user_service.search({ search: this.search })
+        this.user_service.search(this.search)
           .then(({ data: {users} }) => this.users_list = users)
-          .catch((Err) => console.log(Err));
+          .catch((err) => console.log(err));
       },
       getRequests() {
         this.friend_service.getSentRequests()
-          .then(({ data: { users } }) => this.request_list = users);
+          .then(({ data: { friends } }) => this.request_list = friends);
       },
       async removeRequest(id) {
         await this.friend_service.removeRequest(id);
 
+        this.getUsers()
         this.getRequests();
       },
-      async addFriend(friend_id) {
-        await this.friend_service.createRequest({ receiver_id: friend_id });
-
-        this.getRequests();
+      addFriend(friend_id) {
+        this.friend_service.createRequest({ receiver_id: friend_id })
+          .then(() => {
+            this.getUsers()
+            this.getRequests();
+          })
+          .catch((err) => {
+            console.log(err)
+            Swal.fire({
+              icon: 'error',
+              title: 'Oops...',
+              text: err.response.data.message,
+            })
+          })
       }
     }
   }
@@ -69,36 +84,43 @@
         </div>
         <div v-else class="friend_container my-4">
           <!-- RequestList -->
-          <h6 v-if="request_list.length" class="text-muted">Requests sent</h6>
+          <div v-if="request_list.length">
+            <h5 class="text-muted my-3">Requests sent</h5>
+            <hr>
+          </div>
           <b-row 
             class="friend_card d-flex justify-content-center align-items-center"
-            :key="'request - ' + request.id"
             v-for="request in request_list"
+            :key="'request - ' + request.id"
           >
             <b-col md="2">
-              <img class="avatar small-avatar" :src="request.Users_Friends_receiver_idToUsers.profile_image_url">
+              <img class="avatar small-avatar" :src="request.profile_image">
             </b-col>
             <b-col md="6">
-              <p class="friend_name">{{ request.Users_Friends_receiver_idToUsers.username }}</p>
+              <p class="friend_name">{{ request.username }}</p>
             </b-col>
             <b-col md="2">
               <div class="friend_actions">
                 <div class="d-flex justify-content-end friends-action">
-                  <b-icon style="color: red" icon="person-x-fill" class="h3 m-0" @click="removeRequest(request.id)" />
+                  <b-icon style="color: red" icon="person-x-fill" class="h3 m-0" @click="removeRequest(request.friend_id)" />
                 </div>
               </div>
             </b-col>
           </b-row>
           
           <!-- Users List -->
-          <h6 v-if="users_list.length" class="text-muted">Users</h6>
+          <div>
+            <h5 v-if="users_list.length" class="text-muted my-3">Users</h5>
+            <hr>
+          </div>
           <b-row 
             class="friend_card d-flex justify-content-center align-items-center"
             :key="'friend - ' + user.id"
             v-for="user in users_list"
           >
             <b-col md="2">
-              <img class="avatar small-avatar" :src="user.profile_image_url">
+              <img v-if="user.profile_image" class="avatar small-avatar" :src="user.profile_image">
+              <img v-else class="avatar small-avatar" src="~/assets/imgs/default-user-img.jpg" />
             </b-col>
             <b-col md="6">
               <p class="friend_name">{{ user.username }}</p>

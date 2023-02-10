@@ -16,7 +16,7 @@
           username: '',
           password: '',
           confirm_password: '',
-          profile_image_url: null,
+          profile_image: null,
         },
         img: null,
         service: new UserService(),
@@ -46,7 +46,6 @@
         if (!is_valid) return;
         const body = { ...this.params };
         delete body.confirm_password;
-        console.log(body);
 
         this.service.create(body)
           .then(() => {
@@ -70,7 +69,7 @@
       },
       setImage(value) {
         this.hasImage = true;
-        this.params.profile_image_url = value;
+        this.params.profile_image = value;
         this.img = value;
       },
       formatText(str) {

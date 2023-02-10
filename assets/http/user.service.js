@@ -8,14 +8,20 @@ class UserService extends HttpService {
     this.token = useToken().getToken
   }
 
-  async create(params) {
-    const response = await axios.post('http://localhost:3001'+ '/users', params);
+  async getUser(token) {
+    const response = await axios.get(this.ApiBaseUrl + '/users/self', {headers: { Authorization: token}});
 
     return response;
   }
 
-  async search(params) {
-    const response = await axios.get('http://localhost:3001' + `/users/all?q=${params.search}`, {headers: { authorization: this.token} });
+  async create(params) {
+    const response = await axios.post(this.ApiBaseUrl + '/users', params);
+
+    return response;
+  }
+
+  async search(search) {
+    const response = await axios.get(this.ApiBaseUrl  + `/users?search=${search}`, {headers: { authorization: this.token} });
   
     return response;
   }

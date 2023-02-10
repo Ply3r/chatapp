@@ -8,26 +8,38 @@ class FriendService extends HttpService {
     this.token = useToken().getToken
   }
 
-  async search(params) {
-    const response = await axios.get('http://localhost:3001' + `/friends?q=${params.search}`, {headers: { authorization: this.token} });
+  async search(search) {
+    const response = await axios.get(this.ApiBaseUrl + `/friends?search=${search}`, {headers: { authorization: this.token} });
   
     return response;
   }
 
   async getSentRequests() {
-    const response = await axios.get('http://localhost:3001' + '/friends/sent', {headers: { authorization: this.token} });
+    const response = await axios.get(this.ApiBaseUrl + '/friends/sent', {headers: { authorization: this.token} });
 
     return response;
   }
 
+  async getReceivedRequests() {
+    const response = await axios.get(this.ApiBaseUrl + '/friends/received', {headers: { authorization: this.token} });
+
+    return response;
+  }
+
+  async acceptRequest(id) {
+    const response = await axios.patch(this.ApiBaseUrl + `/friends/accept`, {id}, {headers: { authorization: this.token} });
+    
+    return response
+  }
+
   async createRequest(data) {
-    const response = await axios.post('http://localhost:3001' + `/friends`, data, {headers: { authorization: this.token} });
+    const response = await axios.post(this.ApiBaseUrl + `/friends`, data, {headers: { authorization: this.token} });
     
     return response
   }
 
   async removeRequest(id) {
-    const response = await axios.delete('http://localhost:3001' + `/friends/${id}`, {headers: { authorization: this.token} });
+    const response = await axios.delete(this.ApiBaseUrl + `/friends/${id}`, {headers: { authorization: this.token} });
     
     return response
   }

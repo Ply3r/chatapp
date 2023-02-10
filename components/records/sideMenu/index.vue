@@ -1,8 +1,9 @@
-<script>
+<script lang="js">
 import ProfileIcon from './ProfileIcon.vue';
+import Chats from './Chats.vue';
 export default {
   name: 'SideMenu',
-  components: { ProfileIcon },
+  components: { ProfileIcon, Chats },
 }
 
 </script>
@@ -10,6 +11,7 @@ export default {
 <template>
   <div class="side-menu-container">
     <ProfileIcon />
+    <Chats />
   </div>
 </template>
 

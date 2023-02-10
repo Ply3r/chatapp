@@ -12,7 +12,7 @@
         user: {
           username: null,
           email: null,
-          profile_image_url: null,
+          profile_image: null,
           status: true,
         }
       }
@@ -25,7 +25,7 @@
         const user = useUser().getUser;
         this.user.username = user.username;
         this.user.email = user.email;
-        this.user.profile_image_url = user.profile_image_url;
+        this.user.profile_image = user.profile_image;
         this.user.status = user.status;
       }
     }
@@ -36,16 +36,16 @@
   <div>
     <div>
       <b-row class="profile-container">
-        <b-col sm="4">
+        <b-col md="4">
           <div 
             class="avatar big-avatar m-3"
           >
-            <img v-if="user.profile_image_url" :src="user.profile_image_url" />
+            <img v-if="user.profile_image" :src="user.profile_image" />
             <img v-else src="~/assets/imgs/default-user-img.jpg" />
-            <div :class="{ 'status-badget': true, online: user.status}"></div>
+            <div :class="{ 'status-badget-big': true, online: user.status}"></div>
           </div>
         </b-col>
-        <b-col sm="8">
+        <b-col md="6" class="mx-3">
           <div>
             <h2>{{ user.username }}</h2>
             <p>{{ user.email }}</p>
@@ -69,7 +69,7 @@
           </div>
         </b-col>
       </b-row>
-      <hr>
+      <hr class="mb-1">
     </div>
     <b-modal 
       title="Friend List"
@@ -88,10 +88,10 @@
   </div>
 </template>
 
-<style scoped>
+<style>
 hr {
   width: 100%;
-  border: 1px solid rgba(255, 255, 255, 0.703);
+  border: 1px solid rgba(255, 255, 255, 0.197);
 }
 
 .icons-container {
@@ -119,19 +119,43 @@ hr {
   margin: 0;
 }
 
-.status-badget {
-  height: 20px;
-  width: 20px;
+.status-badget-big {
+  height: 30px;
+  width: 30px;
   position: absolute;
   right: 30%;
   bottom: 18%;
   border-radius: 50%;
   background-color: rgb(255, 65, 65);
+  border: 5px solid  #131c21;
+}
+
+.status-badget {
+  height: 20px;
+  width: 20px;
+  position: absolute;
+  right: 20%;
+  bottom: 15%;
+  border-radius: 50%;
+  background-color: rgb(255, 65, 65);
+  border: 4px solid  #131c21;
 }
 
 .online {
   box-sizing: content-box;
   background-color: rgb(33, 220, 33);
-  border: 5px solid  #131c21;
+  border: 4px solid  #131c21;
+}
+
+@media screen and (max-width: 1350px) {
+  .status-badget-big {
+    right: 0%;
+    bottom: 18%;
+  }
+
+  .status-badget {
+    right: 8%;
+    bottom: 15%;
+  }
 }
 </style>
